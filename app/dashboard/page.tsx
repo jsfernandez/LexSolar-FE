@@ -165,32 +165,39 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex min-h-screen w-full bg-transparent">
       <AppSidebar currentUser={currentUser} />
       <SidebarInset className="flex-1 w-full">
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 w-full">
+        {/* Header: más liviano, sin borde fuerte */}
+        <header className="flex h-16 shrink-0 items-center gap-2 px-4 bg-transparent">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span>Dashboard</span>
           </div>
         </header>
-        <div className="flex-1 w-full overflow-auto">
-          <DashboardContent
-            stats={stats}
-            installations={installations}
-            alerts={alerts}
-            reports={reports}
-            currentUser={currentUser}
-            handleVerifyInstallation={handleVerifyInstallation}
-            verificationDialog={verificationDialog}
-            setVerificationDialog={setVerificationDialog}
-            verificationLoading={verificationLoading}
-            setVerificationLoading={setVerificationLoading}
-            verificationData={verificationData}
-            setVerificationData={setVerificationData}
-            submitVerification={submitVerification}
-          />
-        </div>
+
+        {/* Contenedor principal con padding y ancho máximo centrado.
+            Evita que el contenido parezca un iframe al ocupar todo el ancho
+            y eliminar bordes fuertes alrededor del contenido. */}
+        <main className="flex-1 w-full overflow-auto p-6">
+          <div className="max-w-7xl mx-auto w-full space-y-6">
+            <DashboardContent
+              stats={stats}
+              installations={installations}
+              alerts={alerts}
+              reports={reports}
+              currentUser={currentUser}
+              handleVerifyInstallation={handleVerifyInstallation}
+              verificationDialog={verificationDialog}
+              setVerificationDialog={setVerificationDialog}
+              verificationLoading={verificationLoading}
+              setVerificationLoading={setVerificationLoading}
+              verificationData={verificationData}
+              setVerificationData={setVerificationData}
+              submitVerification={submitVerification}
+            />
+          </div>
+        </main>
       </SidebarInset>
     </div>
   )
