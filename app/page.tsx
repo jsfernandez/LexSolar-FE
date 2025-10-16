@@ -5,7 +5,7 @@ import LoginModalButton from "@/components/login-modal"
 
 export default function HomePage() {
   return (
-    <main className="min-h-[100svh] bg-gradient-to-b from-white via-slate-50 to-slate-100">
+    <main className="flex flex-col min-h-screen w-full bg-gradient-to-b from-white via-slate-50 to-slate-100">
       <header className="w-full">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
