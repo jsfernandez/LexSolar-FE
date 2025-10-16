@@ -106,8 +106,8 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Session Header */}
+    <div className="min-h-screen bg-background">
+      {/* Simplificar header y eliminar redundancia */}
       <SessionHeader
         title="Mi Perfil"
         subtitle="Gestión de cuenta y actividad"
@@ -115,25 +115,8 @@ export default function UserProfile() {
         userType="installer"
       />
 
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4">
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">Mi Perfil</h1>
-                <p className="text-sm text-gray-600">Gestión de cuenta y actividad</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <Image src="/images/logo-apolla.png" alt="ApollA" width={120} height={50} className="h-8 w-auto" />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Contenido principal */}
+      <main className="container mx-auto py-8 px-4 max-w-7xl">
         <Tabs defaultValue="profile" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="profile" className="flex items-center gap-2">
@@ -449,7 +432,7 @@ export default function UserProfile() {
             </Card>
           </TabsContent>
         </Tabs>
-      </div>
+      </main>
 
       {/* WhatsApp Agent */}
       <WhatsAppAgent userType="installer" currentPage="profile" />
