@@ -75,11 +75,11 @@ export function AppSidebar({ currentUser, ...props }: React.ComponentProps<typeo
               url: "/register-installation",
               icon: ClipboardList,
             },
-            {
+            /*{
               title: "Mi Suscripción",
               url: "/subscription",
               icon: CreditCard,
-            },
+            },*/
           ],
         },
         {
