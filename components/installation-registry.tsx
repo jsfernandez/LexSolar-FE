@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
+import ComponentRegistryForm from "./component-registry-form"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -20,7 +21,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-type ComponentType = "panels" | "inverters" | "batteries"
+type ComponentType = "panels" | "inverters" | "batteries" | "installation"
 
 type FileLike = File
 
@@ -92,6 +93,7 @@ export default function InstallationRegistry() {
     panels: { codes: [], images: [] },
     inverters: { codes: [], images: [] },
     batteries: { codes: [], images: [] },
+    installation: { codes: [], images: [] }
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -328,6 +330,7 @@ export default function InstallationRegistry() {
         panels: { codes: [], images: [] },
         inverters: { codes: [], images: [] },
         batteries: { codes: [], images: [] },
+        installation: { codes: [], images: [] }
       })
     }, 3000)
   }
@@ -562,169 +565,8 @@ export default function InstallationRegistry() {
               />
             </div>
 
-            {/* Paneles */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <Label className="text-base font-medium">Paneles Solares</Label>
-                <Button variant="outline" size="sm" onClick={() => setScannerOpen("panels")} type="button">
-                  <QrCode className="h-4 w-4 mr-2" />
-                  Escanear código
-                </Button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="panelBrand">Marca {scanned.panels.codes.length > 0 && "(auto)"}</Label>
-                  <Input
-                    id="panelBrand"
-                    value={scanned.panels.brand ?? formData.panelBrand}
-                    onChange={(e) => setFormData({ ...formData, panelBrand: e.target.value })}
-                    disabled={scanned.panels.codes.length > 0}
-                    placeholder={scanned.panels.codes.length > 0 ? "Autodetectado por código" : ""}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="panelModel">Modelo {scanned.panels.codes.length > 0 && "(auto)"}</Label>
-                  <Input
-                    id="panelModel"
-                    value={scanned.panels.model ?? formData.panelModel}
-                    onChange={(e) => setFormData({ ...formData, panelModel: e.target.value })}
-                    disabled={scanned.panels.codes.length > 0}
-                    placeholder={scanned.panels.codes.length > 0 ? "Autodetectado por código" : ""}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="panelQuantity">Cantidad *</Label>
-                  <Input
-                    id="panelQuantity"
-                    type="number"
-                    value={formData.panelQuantity}
-                    onChange={(e) => setFormData({ ...formData, panelQuantity: e.target.value })}
-                    placeholder={scanned.panels.codes.length > 0 ? `Escaneados: ${scanned.panels.codes.length}` : ""}
-                  />
-                </div>
-              </div>
-
-              {scanned.panels.codes.length > 0 && (
-                <CodesPreview
-                  title="Códigos de paneles escaneados"
-                  codes={scanned.panels.codes}
-                  images={scanned.panels.images}
-                  onRemove={(code) => removeScannedCode("panels", code)}
-                />
-              )}
-            </div>
-
-            <Separator />
-
-            {/* Inversores */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <Label className="text-base font-medium">Inversores</Label>
-                <Button variant="outline" size="sm" onClick={() => setScannerOpen("inverters")} type="button">
-                  <QrCode className="h-4 w-4 mr-2" />
-                  Escanear código
-                </Button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="inverterBrand">Marca {scanned.inverters.codes.length > 0 && "(auto)"}</Label>
-                  <Input
-                    id="inverterBrand"
-                    value={scanned.inverters.brand ?? formData.inverterBrand}
-                    onChange={(e) => setFormData({ ...formData, inverterBrand: e.target.value })}
-                    disabled={scanned.inverters.codes.length > 0}
-                    placeholder={scanned.inverters.codes.length > 0 ? "Autodetectado por código" : ""}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="inverterModel">Modelo {scanned.inverters.codes.length > 0 && "(auto)"}</Label>
-                  <Input
-                    id="inverterModel"
-                    value={scanned.inverters.model ?? formData.inverterModel}
-                    onChange={(e) => setFormData({ ...formData, inverterModel: e.target.value })}
-                    disabled={scanned.inverters.codes.length > 0}
-                    placeholder={scanned.inverters.codes.length > 0 ? "Autodetectado por código" : ""}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="inverterQuantity">Cantidad *</Label>
-                  <Input
-                    id="inverterQuantity"
-                    type="number"
-                    value={formData.inverterQuantity}
-                    onChange={(e) => setFormData({ ...formData, inverterQuantity: e.target.value })}
-                    placeholder={
-                      scanned.inverters.codes.length > 0 ? `Escaneados: ${scanned.inverters.codes.length}` : ""
-                    }
-                  />
-                </div>
-              </div>
-
-              {scanned.inverters.codes.length > 0 && (
-                <CodesPreview
-                  title="Códigos de inversores escaneados"
-                  codes={scanned.inverters.codes}
-                  images={scanned.inverters.images}
-                  onRemove={(code) => removeScannedCode("inverters", code)}
-                />
-              )}
-            </div>
-
-            <Separator />
-
-            {/* Baterías */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <Label className="text-base font-medium">Baterías</Label>
-                <Button variant="outline" size="sm" onClick={() => setScannerOpen("batteries")} type="button">
-                  <QrCode className="h-4 w-4 mr-2" />
-                  Escanear código
-                </Button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="batteryBrand">Marca {scanned.batteries.codes.length > 0 && "(auto)"}</Label>
-                  <Input
-                    id="batteryBrand"
-                    value={scanned.batteries.brand ?? formData.batteryBrand}
-                    onChange={(e) => setFormData({ ...formData, batteryBrand: e.target.value })}
-                    disabled={scanned.batteries.codes.length > 0}
-                    placeholder={scanned.batteries.codes.length > 0 ? "Autodetectado por código" : ""}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="batteryModel">Modelo {scanned.batteries.codes.length > 0 && "(auto)"}</Label>
-                  <Input
-                    id="batteryModel"
-                    value={scanned.batteries.model ?? formData.batteryModel}
-                    onChange={(e) => setFormData({ ...formData, batteryModel: e.target.value })}
-                    disabled={scanned.batteries.codes.length > 0}
-                    placeholder={scanned.batteries.codes.length > 0 ? "Autodetectado por código" : ""}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="batteryQuantity">Cantidad</Label>
-                  <Input
-                    id="batteryQuantity"
-                    type="number"
-                    value={formData.batteryQuantity}
-                    onChange={(e) => setFormData({ ...formData, batteryQuantity: e.target.value })}
-                    placeholder={
-                      scanned.batteries.codes.length > 0 ? `Escaneados: ${scanned.batteries.codes.length}` : ""
-                    }
-                  />
-                </div>
-              </div>
-
-              {scanned.batteries.codes.length > 0 && (
-                <CodesPreview
-                  title="Códigos de baterías escaneados"
-                  codes={scanned.batteries.codes}
-                  images={scanned.batteries.images}
-                  onRemove={(code) => removeScannedCode("batteries", code)}
-                />
-              )}
-            </div>
+            {/* Nuevo Formulario de Componentes */}
+            <ComponentRegistryForm />
           </CardContent>
         </Card>
 
