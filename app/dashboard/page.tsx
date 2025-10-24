@@ -16,6 +16,7 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import DashboardContent from "@/components/dashboard-content"
 import { mockApi } from "@/lib/mock-data"
+import InstallationsPage from "@/app/installations/page"
 
 // Mock data para reportes
 const mockReports = [
@@ -167,35 +168,14 @@ export default function DashboardPage() {
   return (
     <div className="flex min-h-screen w-full bg-transparent">
       <AppSidebar currentUser={currentUser} />
-      <SidebarInset className="flex-1 w-full">
-        {/* Header: más liviano, sin borde fuerte */}
-        <header className="flex h-16 shrink-0 items-center gap-2 px-4 bg-transparent">
-          <SidebarTrigger className="-ml-1" />
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Dashboard</span>
-          </div>
-        </header>
+      <SidebarInset className="flex-1 w-full">        
 
         {/* Contenedor principal con padding y ancho máximo centrado.
             Evita que el contenido parezca un iframe al ocupar todo el ancho
             y eliminar bordes fuertes alrededor del contenido. */}
         <main className="flex-1 w-full overflow-auto p-6">
           <div className="max-w-7xl mx-auto w-full space-y-6">
-            <DashboardContent
-              stats={stats}
-              installations={installations}
-              alerts={alerts}
-              reports={reports}
-              currentUser={currentUser}
-              handleVerifyInstallation={handleVerifyInstallation}
-              verificationDialog={verificationDialog}
-              setVerificationDialog={setVerificationDialog}
-              verificationLoading={verificationLoading}
-              setVerificationLoading={setVerificationLoading}
-              verificationData={verificationData}
-              setVerificationData={setVerificationData}
-              submitVerification={submitVerification}
-            />
+            <InstallationsPage />
           </div>
         </main>
       </SidebarInset>
