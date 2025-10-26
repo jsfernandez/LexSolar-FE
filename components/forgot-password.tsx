@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, Mail, Shield, CheckCircle } from "lucide-react"
@@ -15,7 +16,7 @@ export default function ForgotPassword() {
   const [isLoading, setIsLoading] = useState(false)
   const [isEmailSent, setIsEmailSent] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
 
@@ -88,7 +89,7 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 w-full">
       {/* Header */}
       <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

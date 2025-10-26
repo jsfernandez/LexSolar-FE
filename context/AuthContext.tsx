@@ -29,13 +29,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  function getCookie(name: string): string | null {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+    return null;
+  }
+
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    // Check localStorage first, then cookies
+    const storedToken = localStorage.getItem('token') || getCookie('access_token');
     if (storedToken) login(storedToken);
   }, []);
 
   async function login(jwt: string) {
+    // Store under both keys to satisfy legacy code and axios interceptor
     localStorage.setItem('token', jwt);
+    localStorage.setItem('access_token', jwt);
+    
+    // Also store in cookies for middleware authentication
+    document.cookie = `access_token=${jwt}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
+    
     setToken(jwt);
     try {
       const profile = await getProfile(jwt);
@@ -47,6 +61,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   function logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
+    
+    // Also remove from cookies
+    document.cookie = 'access_token=; path=/; max-age=0';
+    
     setToken(null);
     setUser(null);
   }

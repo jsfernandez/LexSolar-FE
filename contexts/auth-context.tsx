@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthContextType, LoginCredentials, User } from '@/types/auth';
 import { authService } from '@/services/api';
+import { getLocalStorageJSON } from '@/lib/utils';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -13,12 +14,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const token = localStorage.getItem('access_token');
+    try {
+      const token = localStorage.getItem('access_token');
+      const parsedUser = getLocalStorageJSON<User>('user');
 
-    if (storedUser && token) {
-      setUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
+      if (token && token !== 'undefined' && parsedUser) {
+        setUser(parsedUser);
+        setIsAuthenticated(true);
+      } else {
+        // Clean up bad persisted values if present
+        if (token === 'undefined') localStorage.removeItem('access_token');
+        const rawUser = localStorage.getItem('user');
+        if (rawUser === 'undefined') localStorage.removeItem('user');
+      }
+    } catch {
+      // Ignore parsing/storage errors and keep unauthenticated state
     }
   }, []);
 

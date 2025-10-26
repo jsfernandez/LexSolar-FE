@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 // Define protected routes
 const protectedRoutes = [
-  '/dashboard',
+  // '/dashboard', // temporalmente público para permitir acceso sin autenticación
   '/me',
   '/users',
   '/profile',

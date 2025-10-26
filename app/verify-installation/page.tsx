@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import type { Installation } from "@/lib/mock-data"
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -14,6 +15,8 @@ import { Badge } from "@/components/ui/badge"
 import { Building2, Calendar, CheckCircle, MapPin, User, Zap } from "lucide-react"
 // importación eliminada
 import { useToast } from "@/hooks/use-toast"
+import { getLocalStorageJSON } from "@/lib/utils"
+import { mockApi } from "@/lib/mock-data"
 
 type VerificationState = {
   inspector: string
@@ -56,21 +59,20 @@ export default function VerifyInstallationPage() {
       try {
         setIsLoading(true)
         // usuario actual
-        const userRaw = localStorage.getItem("currentUser")
-        if (userRaw) {
-          const u = JSON.parse(userRaw)
+        const u = getLocalStorageJSON<UserSession>("currentUser")
+        if (u) {
           setCurrentUser(u)
           setForm((prev) => ({
             ...prev,
             inspector: prev.inspector || u?.name || "",
           }))
         }
-        // instalaciones
-  // TODO: Reemplazar por llamada real a la API
-        setInstallations(data)
+        // instalaciones (mock por ahora)
+        const list = await mockApi.getInstallations()
+        setInstallations(list)
 
         if (installationId) {
-          const found = data.find((i) => i.id === installationId)
+          const found = list.find((i) => i.id === installationId)
           if (found) {
             setSelected(found)
           }
