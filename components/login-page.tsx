@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import Image from "next/image"
 import Link from "next/link"
 import { Eye, EyeOff, Shield, User, Building2, UserCheck, Lock, Mail, Search, Wrench } from 'lucide-react'
+import { useAuth } from "@/contexts/auth-context"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -29,16 +30,21 @@ export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
 
+  const { login } = useAuth();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
     try {
-      const res = await loginUser(loginData.email, loginData.password);
-      await login(res.access_token);
-      router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message ?? 'Error al iniciar sesión');
+      await login({
+        email: loginData.email,
+        password: loginData.password
+      });
+      // No need to redirect here as it's handled in the auth context
+    } catch (error) {
+      console.error('Error during authentication:', error)
+      setError("Credenciales incorrectas o error de conexión. Intente nuevamente.")
     } finally {
       setIsLoading(false);
     }
