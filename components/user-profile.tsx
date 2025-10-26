@@ -21,53 +21,67 @@ import {
 } from "@/components/ui/dialog"
 import SessionHeader from "@/components/session-header"
 import WhatsAppAgent from "@/components/whatsapp-agent"
-import mockData, { mockApi } from "@/lib/mock-data"
+import { useAuth } from "@/contexts/auth-context"
+import { userService } from "@/services/api"
 
 export default function UserProfile() {
-  const [userData, setUserData] = useState(mockData.users[0]) // Usuario por defecto
+  interface EditedData {
+    id?: number;
+    name: string;
+    rut?: string;
+    email: string;
+    phone?: string;
+    address?: string;
+    company?: string;
+    companyRut?: string;
+    role: string;
+    permissions?: string[];
+  }
+
+  const { user: authUser, logout } = useAuth()
+  const [userData, setUserData] = useState<EditedData | null>(null)
   const [userInstallations, setUserInstallations] = useState<any[]>([])
   const [userReports, setUserReports] = useState<any[]>([])
   const [isEditing, setIsEditing] = useState(false)
-  const [editedData, setEditedData] = useState(userData)
+  const [editedData, setEditedData] = useState<EditedData | null>(null)
   const [selectedInstallation, setSelectedInstallation] = useState(null)
 
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        const [installations, reports] = await Promise.all([
-          mockApi.getInstallationsByUser(userData.id),
-          mockApi.getReportsByUser(userData.id)
-        ])
-        
-        // Transform installations data to match expected format
-        const transformedInstallations = installations.map(installation => ({
-          id: installation.id,
-          serialNumber: installation.serialNumber,
-          systemName: installation.systemName,
-          client: installation.client.name,
-          address: installation.address,
-          registrationDate: installation.registrationDate,
-          status: installation.status,
-          components: Object.values(installation.components).reduce((total: number, component: any) => {
-            return total + (component.quantity || 0)
-          }, 0),
-          power: installation.totalPower
-        }))
-        
-        setUserInstallations(transformedInstallations)
-        setUserReports(reports)
+        const profile = await userService.getUser(authUser?.id || 0)
+        setUserData(profile)
+        setEditedData(profile)
       } catch (error) {
         console.error('Error loading user data:', error)
       }
     }
-    
-    loadUserData()
-  }, [userData.id])
 
-  const handleSave = () => {
-    // Simular guardado
-    setIsEditing(false)
-    alert("Perfil actualizado exitosamente")
+    if (authUser) {
+      loadUserData()
+    }
+  }, [authUser])
+
+  interface EditedData {
+    name: string;
+    rut?: string;
+    email: string;
+    phone?: string;
+    address?: string;
+    company?: string;
+    companyRut?: string;
+    role: string;
+  }
+
+  const handleSave = async () => {
+    try {
+      await userService.updateUser(userData?.id || 0, editedData)
+      setIsEditing(false)
+      setUserData({ ...userData, ...editedData })
+    } catch (error) {
+      console.error('Error updating profile:', error)
+      alert("Error al actualizar el perfil")
+    }
   }
 
   const getStatusBadge = (status: string) => {

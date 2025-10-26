@@ -4,6 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Eye, EyeOff, Shield, User, Building2, UserCheck, Lock, Mail, Search, Wrench } from 'lucide-react'
+import { useAuth } from "@/contexts/auth-context"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -25,30 +26,22 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
+  const { login } = useAuth();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError("")
 
     try {
-      console.log('Login attempt:', loginData)
-      
-      // Usar la API mock para autenticación
-      const user = await mockApi.authenticate(loginData.email, loginData.password, loginData.userType)
-      
-      if (user) {
-        console.log('Login successful:', user)
-        // Guardar usuario en localStorage
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        // Redirigir al dashboard
-        window.location.href = "/dashboard"
-      } else {
-        console.log('Login failed')
-        setError("Credenciales incorrectas. Verifique su email, contraseña y tipo de usuario.")
-      }
+      await login({
+        email: loginData.email,
+        password: loginData.password
+      });
+      // No need to redirect here as it's handled in the auth context
     } catch (error) {
       console.error('Error during authentication:', error)
-      setError("Error de conexión. Intente nuevamente.")
+      setError("Credenciales incorrectas o error de conexión. Intente nuevamente.")
     } finally {
       setIsLoading(false)
     }
