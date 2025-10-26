@@ -2,8 +2,6 @@
 
 import { useState } from "react"
 import { useRouter } from 'next/navigation';
-import { loginUser } from '@/services/api';
-import { useAuth } from '@/context/AuthContext';
 import Image from "next/image"
 import Link from "next/link"
 import { Eye, EyeOff, Shield, User, Building2, UserCheck, Lock, Mail, Search, Wrench } from 'lucide-react'
@@ -28,8 +26,6 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
-  const { login } = useAuth();
-
   const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -384,3 +380,4 @@ export default function LoginPage() {
     </div>
   )
 
+}
