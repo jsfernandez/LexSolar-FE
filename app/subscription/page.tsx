@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge"
 import { AlertTriangle, CheckCircle, CreditCardIcon, ArrowLeft } from "lucide-react"
 // importación eliminada
 import { useRouter } from "next/navigation"
+import { getLocalStorageJSON } from "@/lib/utils"
+import { mockApi } from "@/lib/mock-data"
 
 const PLAN_LIMITS: Record<string, number> = {
   Free: 1,
@@ -26,14 +28,13 @@ export default function SubscriptionPage() {
   const [isProcessing, setIsProcessing] = useState(false)
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("currentUser")
-    if (storedUser) {
-      const u = JSON.parse(storedUser)
+    const u = getLocalStorageJSON<any>("currentUser")
+    if (u) {
       setCurrentUser(u)
       setPlan(u?.subscription?.plan ?? "Free")
     }
     // Cargar instalaciones (para calcular uso)
-  // TODO: Reemplazar por llamada real a la API
+    mockApi
       .getInstallations()
       .then(setInstallations)
       .catch(() => setInstallations([]))

@@ -8,7 +8,7 @@ import { AuthProvider } from "@/contexts/auth-context"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "pollA - Sistema de Trazabilidad Solar",
+  title: "LexSolar - Sistema de Trazabilidad Solar",
   description: "Sistema de trazabilidad para componentes solares",
     generator: 'v0.app'
 }

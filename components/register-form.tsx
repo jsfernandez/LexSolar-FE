@@ -57,8 +57,8 @@ export default function RegisterForm() {
       await registerUser(values)
       // Intento de login automático con las mismas credenciales
       try {
-        const auth = await loginUser(values.email, values.password)
-        const token = auth?.access_token || auth?.token
+  const auth = await loginUser(values.email, values.password)
+  const token = auth?.access_token
         if (token) {
           await login(token)
           toast({ title: "Bienvenido", description: "Registro y acceso exitoso." })
@@ -150,10 +150,11 @@ export default function RegisterForm() {
                 <SelectValue placeholder="Seleccionar tipo de usuario" />
               </SelectTrigger>
               <SelectContent>
-                {/* Fiscalizador (actualmente disponible) */}
-                <SelectItem value="3">Fiscalizador</SelectItem>
-                {/* Implementador: placeholder para activar cuando esté disponible */}
-                {/* <SelectItem value="1">Implementador</SelectItem> */}
+                {/* Implementador (único rol habilitado actualmente) */}
+                <SelectItem value="1">Implementador</SelectItem>
+                {/* Otros roles futuros: descomentar cuando el backend los habilite */}
+                {/* <SelectItem value="2">Empresa Instaladora</SelectItem> */}
+                {/* <SelectItem value="3">Fiscalizador</SelectItem> */}
               </SelectContent>
             </Select>
             {errors.role_id && <p className="text-red-500 text-sm">Debe seleccionar un tipo de usuario</p>}

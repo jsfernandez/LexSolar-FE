@@ -14,6 +14,9 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Textarea } from "@/components/ui/textarea"
+import type { Installation } from "@/lib/mock-data"
+import { getLocalStorageJSON } from "@/lib/utils"
+import { mockApi } from "@/lib/mock-data"
 
 interface User {
   id: string
@@ -194,14 +197,12 @@ export default function InstallationsPage() {
     const loadData = async () => {
       try {
         setIsLoading(true)
-        const userData = localStorage.getItem("currentUser")
-        if (userData) {
-          const user = JSON.parse(userData)
-          setCurrentUser(user)
-        }
-  // TODO: Reemplazar por llamada real a la API
-        setInstallations(installationsData)
-        setFilteredInstallations(installationsData)
+    const user = getLocalStorageJSON<User>("currentUser")
+        if (user) setCurrentUser(user)
+    // Cargar instalaciones desde mock por ahora
+    const list = await mockApi.getInstallations()
+    setInstallations(list)
+    setFilteredInstallations(list)
       } catch (error) {
         console.error("Error loading installations:", error)
       } finally {
@@ -1314,7 +1315,17 @@ export default function InstallationsPage() {
         </Dialog>
       )}
 
-      <WhatsAppAgent userType={currentUser?.role || "public"} currentPage="installations" />
+      <WhatsAppAgent
+        userType={
+          currentUser?.role === 'public' ||
+          currentUser?.role === 'installer' ||
+          currentUser?.role === 'inspector' ||
+          currentUser?.role === 'engraving'
+            ? currentUser.role
+            : 'public'
+        }
+        currentPage="installations"
+      />
     </div>
   )
 }

@@ -18,7 +18,8 @@ import {
 } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useAuth } from "@/context/AuthContext"
+import { useAuth } from "@/contexts/auth-context"
+import { getLocalStorageJSON } from "@/lib/utils"
 
 export function AppSidebar({ currentUser, ...props }: React.ComponentProps<typeof Sidebar> & { currentUser?: any }) {
   // Obtener información real del usuario desde localStorage
@@ -26,10 +27,8 @@ export function AppSidebar({ currentUser, ...props }: React.ComponentProps<typeo
   const { user: authUser, logout } = useAuth()
 
   React.useEffect(() => {
-    const storedUser = localStorage.getItem("currentUser")
-    if (storedUser) {
-      setUserInfo(JSON.parse(storedUser))
-    }
+    const user = getLocalStorageJSON<any>("currentUser")
+    if (user) setUserInfo(user)
   }, [])
 
   // Preferir el usuario autenticado desde el backend, con fallback a localStorage o prop
