@@ -174,14 +174,14 @@ export default function WhatsAppAgent({
         message = `Hola, necesito ayuda con el Sistema de Trazabilidad ApollA. ${context}`
     }
 
-    const phoneNumber = "56912345678"
+    const phoneNumber = "56950362875"
     const encodedMessage = encodeURIComponent(message)
     window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank")
     setIsOpen(false)
   }
 
   const handleDirectContact = () => {
-    const phoneNumber = "56912345678"
+    const phoneNumber = "56950362875"
     const message = encodeURIComponent(
       `Hola, soy ${getUserTypeLabel(userType)} y necesito asistencia con el Sistema de Trazabilidad ApollA. Estoy en la sección: ${getPageContext(currentPage)}.`
     )
