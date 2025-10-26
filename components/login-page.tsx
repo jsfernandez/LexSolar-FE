@@ -1,6 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from 'next/navigation';
+import { loginUser } from '@/services/api';
+import { useAuth } from '@/context/AuthContext';
 import Image from "next/image"
 import Link from "next/link"
 import { Eye, EyeOff, Shield, User, Building2, UserCheck, Lock, Mail, Search, Wrench } from 'lucide-react'
@@ -14,25 +17,25 @@ import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import SessionHeader from "@/components/session-header"
 import WhatsAppAgent from "@/components/whatsapp-agent"
-import { mockApi } from "@/lib/mock-data"
 
 export default function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
-    userType: "public",
-  })
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+    email: '',
+    password: '',
+    userType: 'public',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
+  const { login } = useAuth();
 
   const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
-
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
     try {
       await login({
         email: loginData.email,
@@ -43,9 +46,9 @@ export default function LoginPage() {
       console.error('Error during authentication:', error)
       setError("Credenciales incorrectas o error de conexión. Intente nuevamente.")
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const userTypes = [
     {
@@ -69,14 +72,14 @@ export default function LoginPage() {
       icon: UserCheck,
       color: "purple",
     },
-  ]
+  ];
 
   // Credenciales de ejemplo para mostrar al usuario
   const exampleCredentials = {
     public: { email: "maria.gonzalez@email.com", password: "public123" },
     installer: { email: "carlos.mendoza@solartech.cl", password: "installer123" },
     inspector: { email: "ana.torres@sec.gob.cl", password: "inspector123" }
-  }
+  };
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-orange-50">
@@ -380,4 +383,4 @@ export default function LoginPage() {
       <WhatsAppAgent userType="public" currentPage="login" />
     </div>
   )
-}
+

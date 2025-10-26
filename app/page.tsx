@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, ShieldCheck } from "lucide-react"
-import LoginModalButton from "@/components/login-modal"
 
 export default function HomePage() {
   return (
@@ -13,11 +12,17 @@ export default function HomePage() {
             <span className="hidden sm:inline text-sm text-slate-500">Sistema de Trazabilidad Fotovoltaica</span>
           </div>
           <div className="flex items-center gap-3">
-            <LoginModalButton />
+            <Link
+              href="/login"
+              className="inline-flex h-9 items-center justify-center rounded-md border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            >
+              Iniciar sesión
+            </Link>
+            <Link href="/register" className="text-sm font-medium text-slate-700 hover:underline">Registrarse</Link>
           </div>
         </div>
       </header>
-
+      
       <section className="w-full">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -34,13 +39,24 @@ export default function HomePage() {
                 lo esencial.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <LoginModalButton />
+                <Link
+                  href="/login"
+                  className="inline-flex h-11 items-center justify-center rounded-md bg-blue-600 px-4 text-sm font-medium text-white hover:bg-blue-700"
+                >
+                  Iniciar sesión
+                </Link>
                 <Link
                   href="/public-search"
                   className="inline-flex h-11 items-center justify-center rounded-md border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 hover:bg-slate-50"
                 >
                   Consulta pública
                   <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+                <Link
+                  href="/register"
+                  className="inline-flex h-11 items-center justify-center rounded-md bg-emerald-600 px-4 text-sm font-medium text-white hover:bg-emerald-700"
+                >
+                  Registrarse
                 </Link>
               </div>
               <p className="text-xs text-slate-500">Acceso para instaladores, fiscalizadores y público general.</p>

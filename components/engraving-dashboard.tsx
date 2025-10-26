@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dialog"
 import SessionHeader from "@/components/session-header"
 import WhatsAppAgent from "@/components/whatsapp-agent"
-import mockData, { mockApi } from "@/lib/mock-data"
+// importación eliminada
 
 export default function EngravingDashboard() {
   const [engravingRequests, setEngravingRequests] = useState(mockData.engravingRequests)
@@ -36,7 +36,7 @@ export default function EngravingDashboard() {
   useEffect(() => {
     const loadEngravingData = async () => {
       try {
-        const requests = await mockApi.getEngravingRequests()
+  // TODO: Reemplazar por llamada real a la API
         setEngravingRequests(requests)
       } catch (error) {
         console.error('Error loading engraving data:', error)

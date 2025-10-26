@@ -18,10 +18,12 @@ import {
 } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useAuth } from "@/context/AuthContext"
 
 export function AppSidebar({ currentUser, ...props }: React.ComponentProps<typeof Sidebar> & { currentUser?: any }) {
   // Obtener información real del usuario desde localStorage
   const [userInfo, setUserInfo] = React.useState<any>(null)
+  const { user: authUser, logout } = useAuth()
 
   React.useEffect(() => {
     const storedUser = localStorage.getItem("currentUser")
@@ -30,8 +32,8 @@ export function AppSidebar({ currentUser, ...props }: React.ComponentProps<typeo
     }
   }, [])
 
-  // Usar la información real del usuario o la pasada como prop
-  const user = userInfo || currentUser
+  // Preferir el usuario autenticado desde el backend, con fallback a localStorage o prop
+  const user = authUser || userInfo || currentUser
 
   // Datos de navegación que dependen del usuario actual
   const data = React.useMemo(
@@ -151,7 +153,7 @@ export function AppSidebar({ currentUser, ...props }: React.ComponentProps<typeo
                     <AvatarFallback className="rounded-lg">
                       {user?.name
                         ?.split(" ")
-                        .map((n) => n[0])
+                        .map((n: string) => n?.[0] ?? "")
                         .join("")
                         .toUpperCase() || "U"}
                     </AvatarFallback>
@@ -172,6 +174,10 @@ export function AppSidebar({ currentUser, ...props }: React.ComponentProps<typeo
                 <DropdownMenuItem
                   className="cursor-pointer text-red-600 focus:text-red-600"
                   onClick={() => {
+                    try {
+                      logout?.()
+                    } catch {}
+                    // Fallback para compatibilidad con el flujo legacy del LoginModal
                     localStorage.removeItem("currentUser")
                     window.location.href = "/"
                   }}

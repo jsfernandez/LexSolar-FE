@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import WhatsAppAgent from "@/components/whatsapp-agent"
 import { Search, Filter, MapPin, Calendar, Zap, Users, Building2, Eye, MoreHorizontal, CheckCircle, Clock, AlertTriangle, XCircle, TrendingUp, Activity, Shield, Trash2, Plus } from 'lucide-react'
-import { mockApi, type Installation } from "@/lib/mock-data"
+// importación eliminada
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -199,7 +199,7 @@ export default function InstallationsPage() {
           const user = JSON.parse(userData)
           setCurrentUser(user)
         }
-        const installationsData = await mockApi.getInstallations()
+  // TODO: Reemplazar por llamada real a la API
         setInstallations(installationsData)
         setFilteredInstallations(installationsData)
       } catch (error) {

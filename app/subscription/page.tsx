@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { AlertTriangle, CheckCircle, CreditCardIcon, ArrowLeft } from "lucide-react"
-import { mockApi } from "@/lib/mock-data"
+// importación eliminada
 import { useRouter } from "next/navigation"
 
 const PLAN_LIMITS: Record<string, number> = {
@@ -33,7 +33,7 @@ export default function SubscriptionPage() {
       setPlan(u?.subscription?.plan ?? "Free")
     }
     // Cargar instalaciones (para calcular uso)
-    mockApi
+  // TODO: Reemplazar por llamada real a la API
       .getInstallations()
       .then(setInstallations)
       .catch(() => setInstallations([]))

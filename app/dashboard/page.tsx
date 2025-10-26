@@ -15,7 +15,7 @@ import { Building2, Zap, Shield, AlertTriangle, TrendingUp, FileText, Eye, Calen
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import DashboardContent from "@/components/dashboard-content"
-import { mockApi } from "@/lib/mock-data"
+// importación eliminada
 import InstallationsPage from "@/app/installations/page"
 
 // Mock data para reportes
@@ -104,10 +104,7 @@ export default function DashboardPage() {
     const loadDashboardData = async () => {
       try {
         const [statsData, installationsData, alertsData, reportsData] = await Promise.all([
-          mockApi.getStats(),
-          mockApi.getInstallations(),
-          mockApi.getSecurityAlerts(),
-          mockApi.getReports()
+// TODO: Reemplazar por llamadas reales a la API
         ])
 
         setStats(statsData)
