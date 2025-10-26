@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dialog"
 import SessionHeader from "@/components/session-header"
 import WhatsAppAgent from "@/components/whatsapp-agent"
-import mockData, { mockApi } from "@/lib/mock-data"
+// importación eliminada
 
 export default function UserProfile() {
   const [userData, setUserData] = useState(mockData.users[0]) // Usuario por defecto
@@ -35,8 +35,7 @@ export default function UserProfile() {
     const loadUserData = async () => {
       try {
         const [installations, reports] = await Promise.all([
-          mockApi.getInstallationsByUser(userData.id),
-          mockApi.getReportsByUser(userData.id)
+          // TODO: Reemplazar por llamada real a la API
         ])
         
         // Transform installations data to match expected format

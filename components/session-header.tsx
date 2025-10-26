@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Clock, Calendar, User, MessageCircle } from "lucide-react"
@@ -20,6 +21,7 @@ export default function SessionHeader({
   showWhatsApp = true,
   userType = "installer",
 }: SessionHeaderProps) {
+  const router = useRouter()
   const [currentTime, setCurrentTime] = useState(new Date())
   const [sessionDuration, setSessionDuration] = useState(0)
 
@@ -136,12 +138,22 @@ export default function SessionHeader({
           </div>
 
           {/* Lado derecho - WhatsApp */}
-          {showWhatsApp && (
-            <Button onClick={handleWhatsAppClick} className="bg-green-500 hover:bg-green-600 text-white" size="sm">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              Agente Virtual
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-sm font-medium"
+              onClick={() => router.push("/register")}
+            >
+              Registrarse
             </Button>
-          )}
+            {showWhatsApp && (
+              <Button onClick={handleWhatsAppClick} className="bg-green-500 hover:bg-green-600 text-white" size="sm">
+                <MessageCircle className="h-4 w-4 mr-2" />
+                Agente Virtual
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Información móvil */}

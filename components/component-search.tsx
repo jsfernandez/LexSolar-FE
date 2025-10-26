@@ -18,7 +18,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import mockData, { mockApi } from "@/lib/mock-data"
+// importación eliminada
 
 // Reemplazar la constante componentsDatabase con:
 const getComponentsDatabase = () => {
@@ -152,7 +152,7 @@ export default function ComponentSearch() {
 
     try {
       // Usar la API mock en lugar de la simulación local
-      const results = await mockApi.searchComponents(searchQuery)
+  // TODO: Reemplazar por llamada real a la API
       setSearchResults(results)
     } catch (error) {
       console.error('Error searching components:', error)

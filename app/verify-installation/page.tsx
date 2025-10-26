@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Building2, Calendar, CheckCircle, MapPin, User, Zap } from "lucide-react"
-import { mockApi, type Installation } from "@/lib/mock-data"
+// importación eliminada
 import { useToast } from "@/hooks/use-toast"
 
 type VerificationState = {
@@ -66,7 +66,7 @@ export default function VerifyInstallationPage() {
           }))
         }
         // instalaciones
-        const data = await mockApi.getInstallations()
+  // TODO: Reemplazar por llamada real a la API
         setInstallations(data)
 
         if (installationId) {
