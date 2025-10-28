@@ -16,12 +16,12 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check if the route is protected
-  if (protectedRoutes.some(route => pathname.startsWith(route))) {
+  /* if (protectedRoutes.some(route => pathname.startsWith(route))) {
     if (!token) {
       const response = NextResponse.redirect(new URL('/login', request.url));
       return response;
     }
-  }
+  } */
 
   // If user is logged in and tries to access login page, redirect to dashboard
   if (token && (pathname === '/login' || pathname === '/register')) {
