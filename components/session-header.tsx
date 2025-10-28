@@ -94,7 +94,7 @@ export default function SessionHeader({
   const handleWhatsAppClick = () => {
     const phoneNumber = "56950362875" // Número de WhatsApp del soporte
     const message = encodeURIComponent(
-      `Hola, necesito ayuda con el Sistema de Trazabilidad Fotovoltaica ApollA. Estoy en la sección: ${title}. Mi tipo de usuario es: ${getUserTypeLabel(userType)}.`,
+  `Hola, necesito ayuda con el Sistema de Trazabilidad Fotovoltaica LexSolar. Estoy en la sección: ${title}. Mi tipo de usuario es: ${getUserTypeLabel(userType)}.`,
     )
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank")
   }

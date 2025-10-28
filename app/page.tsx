@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Clock, MapPin, LogIn, Search, Sun, Shield, ChevronUp } from "lucide-react"
+import { ArrowRight, Clock, MapPin, LogIn, Search, Sun, Shield, ChevronUp, UserPlus } from "lucide-react"
 
 export default function HomePage() {
   const [currentTime, setCurrentTime] = useState<Date | null>(null)
@@ -70,7 +70,7 @@ export default function HomePage() {
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Sun className="h-8 w-8 text-amber-500 animate-pulse" />
-            <Image src="/images/logo-apolla.png" alt="ApollA" width={120} height={48} className="h-20 w-full" priority />
+            <Image src="/images/logo-apolla.png" alt="LexSolar" width={120} height={48} className="h-20 w-full" priority />
           </div>
           
           {/* Reloj de Chile - minimalista */}
@@ -125,11 +125,11 @@ export default function HomePage() {
               {/* Botones con iconos y animaciones */}
               <div className="flex flex-col sm:flex-row gap-4 pt-6">
                 <Link
-                  href="/login"
+                  href="/register"
                   className="group inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-slate-900 px-8 text-base font-semibold text-white hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1"
                 >
-                  <LogIn className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                  Iniciar sesión
+                  <UserPlus className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                  Registrarse
                   <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
@@ -141,10 +141,16 @@ export default function HomePage() {
                 </Link>
               </div>
               
-              <p className="text-sm text-slate-500 pt-2 flex items-center gap-2">
-                <Sun className="h-4 w-4 text-amber-500" />
-                Acceso para instaladores, fiscalizadores y público general
-              </p>
+              <div className="pt-3 flex items-center flex-wrap gap-3">
+                <span className="inline-flex items-center rounded-full border border-amber-300 bg-amber-50 px-3 py-1.5 text-amber-900 font-semibold shadow-sm">
+                  Plan gratuito: 2 instalaciones gratis al registrarte
+                </span>
+                <span className="hidden sm:inline text-slate-300">•</span>
+                <span className="text-sm text-slate-600 flex items-center gap-2">
+                  Acceso para instaladores, fiscalizadores y público general
+                  <Sun className="h-4 w-4 text-amber-500" />
+                </span>
+              </div>
             </div>
 
             {/* Imagen con gradiente solar */}
@@ -207,7 +213,7 @@ export default function HomePage() {
           </div>
           
           <div className="mt-6 pt-6 border-t border-slate-100 text-center">
-            <p className="text-sm text-slate-500">© {new Date().getFullYear()} ApollA. Sistema de Trazabilidad Solar</p>
+            <p className="text-sm text-slate-500">© {new Date().getFullYear()} LexSolar. Sistema de Trazabilidad Solar</p>
           </div>
         </div>
       </footer>

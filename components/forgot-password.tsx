@@ -43,7 +43,7 @@ export default function ForgotPassword() {
               </div>
 
               <div className="flex items-center gap-8">
-                <Image src="/images/logo-apolla.png" alt="ApollA" width={120} height={60} className="h-12 w-auto" />
+                <Image src="/images/logo-apolla.png" alt="LexSolar" width={120} height={60} className="h-12 w-auto" />
                 <Image src="/images/logo-acesol.png" alt="ACESOL" width={140} height={60} className="h-12 w-auto" />
                 <Image
                   src="/images/logo-ministerio-energia.png"
@@ -103,7 +103,7 @@ export default function ForgotPassword() {
             </div>
 
             <div className="flex items-center gap-8">
-              <Image src="/images/logo-apolla.png" alt="ApollA" width={120} height={60} className="h-12 w-auto" />
+              <Image src="/images/logo-apolla.png" alt="LexSolar" width={120} height={60} className="h-12 w-auto" />
               <Image src="/images/logo-acesol.png" alt="ACESOL" width={140} height={60} className="h-12 w-auto" />
               <Image
                 src="/images/logo-ministerio-energia.png"

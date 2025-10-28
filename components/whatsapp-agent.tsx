@@ -123,7 +123,7 @@ export default function WhatsAppAgent({
     
     switch (responseId) {
       case "help":
-        message = `Hola, necesito ayuda general con el Sistema de Trazabilidad ApollA. ${context}`
+  message = `Hola, necesito ayuda general con el Sistema de Trazabilidad LexSolar. ${context}`
         break
       case "contact":
         message = `Hola, necesito información de contacto y soporte. ${context}`
@@ -171,7 +171,7 @@ export default function WhatsAppAgent({
         message = `Hola, ¿qué significan los diferentes estados de las instalaciones? ${context}`
         break
       default:
-        message = `Hola, necesito ayuda con el Sistema de Trazabilidad ApollA. ${context}`
+  message = `Hola, necesito ayuda con el Sistema de Trazabilidad LexSolar. ${context}`
     }
 
     const phoneNumber = "56950362875"
@@ -183,7 +183,7 @@ export default function WhatsAppAgent({
   const handleDirectContact = () => {
     const phoneNumber = "56950362875"
     const message = encodeURIComponent(
-      `Hola, soy ${getUserTypeLabel(userType)} y necesito asistencia con el Sistema de Trazabilidad ApollA. Estoy en la sección: ${getPageContext(currentPage)}.`
+  `Hola, soy ${getUserTypeLabel(userType)} y necesito asistencia con el Sistema de Trazabilidad LexSolar. Estoy en la sección: ${getPageContext(currentPage)}.`
     )
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank")
     setIsOpen(false)
@@ -213,7 +213,7 @@ export default function WhatsAppAgent({
                     <MessageCircle className="h-5 w-5" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg">Agente Virtual ApollA</CardTitle>
+                    <CardTitle className="text-lg">Agente Virtual LexSolar</CardTitle>
                     <CardDescription className="text-green-100">
                       Asistencia 24/7 - {formatTime(currentTime)}
                     </CardDescription>
@@ -325,7 +325,7 @@ export default function WhatsAppAgent({
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Mail className="h-4 w-4" />
-                    <span>soporte@apolla.cl</span>
+                    <span>soporte@lexsolar.cl</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Clock className="h-4 w-4" />
