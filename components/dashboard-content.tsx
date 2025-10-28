@@ -249,7 +249,7 @@ export default function DashboardContent({
               <p className="text-xs text-gray-500">Sistema de Trazabilidad Fotovoltaica</p>
             </div>
           </div>
-          <Image src="/images/logo-apolla.png" alt="ApollA" width={80} height={40} className="h-8 w-auto" />
+          <Image src="/images/logo-apolla.png" alt="LexSolar" width={80} height={40} className="h-8 w-auto" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -330,7 +330,7 @@ export default function DashboardContent({
           </div>
 
           <div className="flex items-center gap-4">
-            <Image src="/images/logo-apolla.png" alt="ApollA" width={80} height={40} className="h-8 w-auto" />
+            <Image src="/images/logo-apolla.png" alt="LexSolar" width={80} height={40} className="h-8 w-auto" />
             <Image
               src="/images/logo-acesol.png"
               alt="ACESOL"

@@ -95,7 +95,7 @@ export default function PublicSearchPage() {
             </div>
 
             <div className="flex items-center gap-4">
-              <Image src="/images/logo-apolla.png" alt="ApollA" width={120} height={50} className="h-8 w-auto" />
+              <Image src="/images/logo-apolla.png" alt="LexSolar" width={120} height={50} className="h-8 w-auto" />
             </div>
           </div>
         </div>
@@ -379,7 +379,7 @@ export default function PublicSearchPage() {
               <div className="text-center">
                 <Image
                   src="/images/logo-apolla.png"
-                  alt="ApollA"
+                  alt="LexSolar"
                   width={160}
                   height={60}
                   className="h-14 w-auto mx-auto mb-2"

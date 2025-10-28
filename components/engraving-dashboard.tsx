@@ -139,7 +139,7 @@ export default function EngravingDashboard() {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                  <Image src="/images/logo-apolla.png" alt="ApollA" width={32} height={32} className="h-6 w-auto" />
+                  <Image src="/images/logo-apolla.png" alt="LexSolar" width={32} height={32} className="h-6 w-auto" />
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-gray-900">Empresa Certificadora</h1>
@@ -149,7 +149,7 @@ export default function EngravingDashboard() {
             </div>
 
             <div className="flex items-center gap-8">
-              <Image src="/images/logo-apolla.png" alt="ApollA" width={120} height={50} className="h-8 w-auto" />
+              <Image src="/images/logo-apolla.png" alt="LexSolar" width={120} height={50} className="h-8 w-auto" />
               <Image
                 src="/images/logo-acesol.png"
                 alt="ACESOL"
