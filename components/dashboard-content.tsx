@@ -1,6 +1,7 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import {
   Search,
@@ -18,6 +19,7 @@ import {
   Eye,
   Download,
   Bell,
+  Sun,
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -172,18 +174,43 @@ export default function DashboardContent({
     return matchesStatus && matchesSearch
   })
 
-  const currentTime = new Date().toLocaleTimeString("es-CL", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  })
+  // Reloj en vivo en hora de Chile
+  const [now, setNow] = useState<Date | null>(null)
+  useEffect(() => {
+    setNow(new Date())
+    const id = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
 
-  const currentDate = new Date().toLocaleDateString("es-CL", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
+  const getChileTime = () => {
+    if (!now) return { time: "--:--:--", date: "--" }
+    const time = now.toLocaleTimeString("es-CL", {
+      timeZone: "America/Santiago",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    })
+    const date = now.toLocaleDateString("es-CL", {
+      timeZone: "America/Santiago",
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+    return { time, date }
+  }
+  const { time: chileTime, date: chileDate } = getChileTime()
+  
+  // Variants para animaciones
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+  }
+  const itemVariants = {
+    hidden: { opacity: 0, y: 8 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  }
 
   // Verificar si el usuario puede verificar instalaciones
   const canVerifyInstallations = currentUser?.role === "inspector" || currentUser?.role === "engraving"
@@ -297,29 +324,32 @@ export default function DashboardContent({
   }
 
   return (
-    <div className="space-y-6">
+    <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Header con información del sistema */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 bg-white rounded-lg border">
+  <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 rounded-2xl border border-amber-200/60 bg-gradient-to-br from-amber-50 via-white to-orange-50 shadow-sm">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-            <Shield className="h-6 w-6 text-blue-600" />
+          <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+            <Sun className="h-6 w-6 text-amber-600" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Sistema de Trazabilidad</h1>
-            <p className="text-gray-600">Componentes Fotovoltaicos</p>
+            <h1 className="text-2xl font-extrabold text-slate-900 leading-tight">Trazabilidad Solar</h1>
+            <p className="text-slate-600">Registro y verificación de componentes</p>
           </div>
         </div>
 
         <div className="flex items-center gap-6">
-          <div className="text-right">
-            <div className="text-2xl font-bold text-gray-900">{currentTime}</div>
-            <div className="text-sm text-gray-600 hidden md:block">{currentDate}</div>
+          {/* Reloj Chile */}
+          <div className="hidden md:flex items-center gap-3 text-sm text-slate-700 px-3 py-2 bg-slate-100/80 rounded-xl border border-slate-200">
+            <MapPin className="h-3.5 w-3.5 text-amber-600" />
+            <span className="text-xs">Chile</span>
+            <Clock className="h-3.5 w-3.5 text-amber-600" />
+            <span className="font-mono tabular-nums font-semibold text-slate-900">{chileTime}</span>
           </div>
 
           {/* Campanilla de alertas */}
           <div className="relative">
             <Button variant="ghost" size="icon" aria-label="Alertas de seguridad">
-              <Bell className="h-5 w-5 text-gray-700" />
+              <Bell className="h-5 w-5 text-slate-700" />
               <span className="sr-only">Alertas de seguridad</span>
             </Button>
             {alerts?.length ? (
@@ -329,28 +359,17 @@ export default function DashboardContent({
             ) : null}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 opacity-90">
             <Image src="/images/logo-apolla.png" alt="LexSolar" width={80} height={40} className="h-8 w-auto" />
-            <Image
-              src="/images/logo-acesol.png"
-              alt="ACESOL"
-              width={60}
-              height={30}
-              className="h-6 w-auto opacity-70"
-            />
-            <Image
-              src="/images/logo-ministerio-energia.png"
-              alt="Ministerio de Energía"
-              width={60}
-              height={30}
-              className="h-6 w-auto opacity-70"
-            />
+            <Image src="/images/logo-acesol.png" alt="ACESOL" width={60} height={30} className="h-6 w-auto opacity-70" />
+            <Image src="/images/logo-ministerio-energia.png" alt="Ministerio de Energía" width={60} height={30} className="h-6 w-auto opacity-70" />
           </div>
         </div>
-      </div>
+  </motion.div>
 
       {/* Suscripción actual */}
-      <Card>
+      <motion.div variants={itemVariants}>
+      <Card className="transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md">
         <CardContent className="p-4 flex flex-wrap items-center gap-4 justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center">
@@ -369,11 +388,13 @@ export default function DashboardContent({
             </Button>
           </a>
         </CardContent>
-      </Card>
+  </Card>
+  </motion.div>
 
       {/* Navegación rápida */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" variants={containerVariants}>
+        <motion.div variants={itemVariants}>
+        <Card className="hover:shadow-lg transition-all cursor-pointer hover:-translate-y-1">
           <CardContent className="p-6 text-center">
             <Building2 className="h-12 w-12 text-blue-600 mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">Instalaciones</h3>
@@ -383,8 +404,10 @@ export default function DashboardContent({
             </Button>
           </CardContent>
         </Card>
+        </motion.div>
 
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+        <motion.div variants={itemVariants}>
+        <Card className="hover:shadow-lg transition-all cursor-pointer hover:-translate-y-1">
           <CardContent className="p-6 text-center">
             <Shield className="h-12 w-12 text-green-600 mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">Seguridad</h3>
@@ -394,8 +417,10 @@ export default function DashboardContent({
             </Button>
           </CardContent>
         </Card>
+        </motion.div>
 
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+        <motion.div variants={itemVariants}>
+        <Card className="hover:shadow-lg transition-all cursor-pointer hover:-translate-y-1">
           <CardContent className="p-6 text-center">
             <FileText className="h-12 w-12 text-purple-600 mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">Reportes</h3>
@@ -405,7 +430,8 @@ export default function DashboardContent({
             </Button>
           </CardContent>
         </Card>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Contenido principal con tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -416,7 +442,15 @@ export default function DashboardContent({
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <AnimatePresence mode="wait">
+          <motion.div
+            key="overview"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          >
             {/* Actividad reciente */}
             <Card>
               <CardHeader>
@@ -454,12 +488,14 @@ export default function DashboardContent({
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
+          </AnimatePresence>
         </TabsContent>
 
-        <TabsContent value="installations" className="space-y-6">
+  <TabsContent value="installations" className="space-y-6">
           {/* Filtros y búsqueda */}
-          <Card>
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
+          <Card className="transition-transform duration-200 hover:-translate-y-0.5">
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
@@ -493,11 +529,13 @@ export default function DashboardContent({
               </div>
             </CardContent>
           </Card>
+          </motion.div>
 
           {/* Lista de instalaciones */}
-          <div className="space-y-4">
+          <motion.div className="space-y-4" variants={containerVariants} initial="hidden" animate="show">
             {filteredInstallations.map((installation) => (
-              <Card key={installation.id} className="hover:shadow-lg transition-shadow">
+              <motion.div key={installation.id} variants={itemVariants}>
+              <Card className="hover:shadow-lg transition-all hover:-translate-y-0.5">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -573,14 +611,15 @@ export default function DashboardContent({
                   </div>
                 </CardContent>
               </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </TabsContent>
 
         <TabsContent value="activity" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-6" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
             {/* Reportes recientes */}
-            <Card>
+            <Card className="transition-transform duration-200 hover:-translate-y-0.5">
               <CardHeader>
                 <CardTitle>Reportes y Denuncias</CardTitle>
                 <CardDescription>Últimos reportes registrados en el sistema</CardDescription>
@@ -624,24 +663,24 @@ export default function DashboardContent({
               </CardContent>
             </Card>
 
-            {/* Estadísticas de actividad (se mantiene) */}
-            <Card>
+            {/* Estadísticas de actividad */}
+            <Card className="transition-transform duration-200 hover:-translate-y-0.5">
               <CardHeader>
                 <CardTitle>Estadísticas de Actividad</CardTitle>
                 <CardDescription>Resumen de actividad del sistema</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Building2 className="h-4 w-4 text-blue-600" />
+                    <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+                      <Building2 className="h-4 w-4 text-amber-700" />
                     </div>
                     <div>
                       <p className="font-medium">Instalaciones Registradas</p>
                       <p className="text-sm text-gray-600">Este mes</p>
                     </div>
                   </div>
-                  <p className="text-2xl font-bold text-blue-600">{installations.length}</p>
+                  <p className="text-2xl font-bold text-amber-700">{installations.length}</p>
                 </div>
 
                 <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
@@ -675,7 +714,7 @@ export default function DashboardContent({
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </TabsContent>
       </Tabs>
 
@@ -879,6 +918,6 @@ export default function DashboardContent({
 
       {/* WhatsApp Agent */}
       <WhatsAppAgent userType={currentUser?.role || "public"} currentPage="dashboard" />
-    </div>
+    </motion.div>
   )
 }

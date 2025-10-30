@@ -143,7 +143,7 @@ export default function HomePage() {
               
               <div className="pt-3 flex items-center flex-wrap gap-3">
                 <span className="inline-flex items-center rounded-full border border-amber-300 bg-amber-50 px-3 py-1.5 text-amber-900 font-semibold shadow-sm">
-                  Plan gratuito: 2 instalaciones gratis al registrarte
+                  ¡Registrate ahora y ten 2 instalaciones gratis en tu plan free!
                 </span>
                 <span className="hidden sm:inline text-slate-300">•</span>
                 <span className="text-sm text-slate-600 flex items-center gap-2">
