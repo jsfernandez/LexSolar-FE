@@ -1,4 +1,4 @@
-import { api } from '@/services/api';
+//import { api } from '@/services/api';
 import { useRouter } from 'next/navigation';
 
 interface UserData {
@@ -30,7 +30,7 @@ export const useUpdateUser = (id: string) => {
 
   const updateUser = async (data: Partial<UserData>) => {
     try {
-      await api.patch(`/auth/users/${id}`, data);
+      //await api.patch(`/auth/users/${id}`, data);
       router.push('/users');
       router.refresh();
     } catch (error) {

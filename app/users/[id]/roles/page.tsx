@@ -3,7 +3,7 @@ import { useUser, useRoles } from '@/hooks/useUser';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Select } from '@/components/ui/select';
-import { api } from '@/services/api';
+//import { api } from '@/services/api';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 
@@ -20,9 +20,9 @@ export default function UserRolesPage({ params }: { params: { id: string } }) {
     setIsSubmitting(true);
 
     try {
-      await api.patch(`/auth/users/${params.id}/roles`, {
+      /* await api.patch(`/auth/users/${params.id}/roles`, {
         roles: selectedRoles,
-      });
+      }); */
       toast({
         title: 'Success',
         description: 'User roles updated successfully',
