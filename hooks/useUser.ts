@@ -1,5 +1,6 @@
 //import { api } from '@/services/api';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 interface UserData {
   name: string;
@@ -12,7 +13,7 @@ export const useCreateUser = () => {
 
   const createUser = async (data: UserData) => {
     try {
-      await api.post('/auth/users', data);
+      //await api.post('/auth/users', data);
       router.push('/users');
       router.refresh();
     } catch (error) {
@@ -48,7 +49,7 @@ export const useUser = (id: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchUser = async () => {
       try {
         setIsLoading(true);
@@ -63,7 +64,7 @@ export const useUser = (id: string) => {
     };
 
     fetchUser();
-  }, [id]);
+  }, [id]); */
 
   return { user, isLoading, error };
 };
