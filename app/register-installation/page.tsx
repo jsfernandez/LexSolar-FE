@@ -1,3 +1,5 @@
+"use client"
+
 import InstallationRegistry from "@/components/installation-registry"
 
 export default function RegisterInstallationPage() {
