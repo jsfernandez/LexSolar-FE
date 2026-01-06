@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { api } from '@/services/api';
+import { userService } from '@/services/api';
 
 interface User {
   id: string;
@@ -23,7 +23,7 @@ export const useUsers = (page: number = 1, limit: number = 10) => {
     const fetchUsers = async () => {
       try {
         setIsLoading(true);
-        const response = await api.get<UsersResponse>(`/auth/users?page=${page}&limit=${limit}`);
+        const response = await userService.getUsers();
         setData(response.data.data);
         setTotalPages(response.data.totalPages);
         setError(null);

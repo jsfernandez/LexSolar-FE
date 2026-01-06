@@ -38,7 +38,7 @@ export default function LoginPage() {
     
     try {
       // 1. Autenticar usando el AuthProvider (maneja token y perfil internamente)
-      await login({ email: values.email, password: values.password })
+      //await login({ email: values.email, password: values.password })
       // 2. Redirección la hace el provider; dejamos un fallback por si cambia la implementación
       router.push("/dashboard")
     } catch (err: any) {
