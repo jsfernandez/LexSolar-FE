@@ -43,7 +43,18 @@ export default function UserProfile() {
   const [userInstallations, setUserInstallations] = useState<any[]>([])
   const [userReports, setUserReports] = useState<any[]>([])
   const [isEditing, setIsEditing] = useState(false)
-  const [editedData, setEditedData] = useState<EditedData | null>(null)
+  const [editedData, setEditedData] = useState<EditedData>({
+    id: undefined,
+    name: '',
+    rut: '',
+    email: '',
+    phone: '',
+    address: '',
+    company: '',
+    companyRut: '',
+    role: 'user',
+    permissions: []
+  })
   const [selectedInstallation, setSelectedInstallation] = useState(null)
 
   useEffect(() => {
@@ -61,17 +72,6 @@ export default function UserProfile() {
       loadUserData()
     }
   }, [authUser])
-
-  interface EditedData {
-    name: string;
-    rut?: string;
-    email: string;
-    phone?: string;
-    address?: string;
-    company?: string;
-    companyRut?: string;
-    role: string;
-  }
 
   const handleSave = async () => {
     try {
