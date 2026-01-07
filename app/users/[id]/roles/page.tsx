@@ -1,3 +1,4 @@
+"use client"
 import { useState } from 'react';
 import { useUser, useRoles } from '@/hooks/useUser';
 import { Button } from '@/components/ui/button';
@@ -59,7 +60,7 @@ export default function UserRolesPage({ params }: { params: { id: string } }) {
               value={selectedRoles}
               onChange={(e) => {
                 const options = Array.from(e.target.selectedOptions);
-                setSelectedRoles(options.map(option => option.value));
+                setSelectedRoles(options.map(option => option!.value));
               }}
               className="w-full"
             >
