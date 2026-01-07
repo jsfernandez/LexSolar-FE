@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from 'react';
 import { useUsers } from '@/hooks/useUsers';
 import { Button } from '@/components/ui/button';
